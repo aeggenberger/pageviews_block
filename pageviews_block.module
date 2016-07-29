@@ -25,7 +25,7 @@ function pageviews_block_block_view($delta='') {
 
 	switch($delta) {
 	case 'pageviews_block' : 
-		pageviews_block_view();
+		$block['content'] = pageviews_block_view();
 		break;
 	}
 
@@ -33,13 +33,12 @@ function pageviews_block_block_view($delta='') {
 }
 
 /**
- * Custom function to assembl renderable array for block content.
+ * Custom function to assemble renderable array for block content.
  * Returns a renderable array with block content.
  * @return
  *   returns a renderable array of block content.
  */
 function pageviews_block_view() {
-	$block = array();
 
 	$path = $_GET['q'];
 	drupal_set_message($path);
@@ -47,7 +46,7 @@ function pageviews_block_view() {
 	$pageviews_text = "Views: " . $visits;
 
 	// Block output in HTML with div wrapper
-	$block = array(
+	$content = array(
 		'pageviews' => array(
 			'#prefix' => '',
 			'#type' => 'markup',
@@ -55,7 +54,7 @@ function pageviews_block_view() {
 		),
 	);
 
-	return $block;
+	return $content;
 }
 
 // oddly no closing php tag in drupal modules
