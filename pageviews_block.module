@@ -1,16 +1,61 @@
 <?php
 /**
  * @file
- * A module that allows editing tags on multiple nodes from a single page.
+ * Creates a custom block that can be added to pages to display page views.
+ * Useful for view-pages that lack a native pageviews functionality.
  */
 
-// implement hook_help
-function graphic_tag_editor_help($path, $arg) {
-	switch ($path) {
-	case "admin/help#current_posts":
-		return '' . t("Displays links to nodes created on this date") . '';
+/**
+ * Implements hook_block_info().
+ */
+function pageviews_block_block_info() {
+	$blocks = array();
+	$blocks['pageviews_block'] = array(
+		'info' => t('Pageviews'),
+	);
+
+	return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function pageviews_block_block_view($delta='') {
+	$block = array();
+
+	switch($delta) {
+	case 'pageviews_block' : 
+		pageviews_block_view();
 		break;
 	}
+
+	return $block;
+}
+
+/**
+ * Custom function to assembl renderable array for block content.
+ * Returns a renderable array with block content.
+ * @return
+ *   returns a renderable array of block content.
+ */
+function pageviews_block_view() {
+	$block = array();
+
+	$path = $_GET['q'];
+	drupal_set_message($path);
+	$visits = db_query("SELECT count(*) FROM {accesslog} where path = :path", array(':path' => $path))->fetchField();
+	$pageviews_text = "Views: " . $visits;
+
+	// Block output in HTML with div wrapper
+	$block = array(
+		'pageviews' => array(
+			'#prefix' => '',
+			'#type' => 'markup',
+			'#markup' => $pageviews_text,
+		),
+	);
+
+	return $block;
 }
 
 // oddly no closing php tag in drupal modules
