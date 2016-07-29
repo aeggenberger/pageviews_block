@@ -1,3 +1,4 @@
 name = Pageviews block
 description = A block to display pageviews on a page
 core = 7.x
+dependencies[] = statistics
