@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * A module that allows editing tags on multiple nodes from a single page.
+ */
+
+// implement hook_help
+function graphic_tag_editor_help($path, $arg) {
+	switch ($path) {
+	case "admin/help#current_posts":
+		return '' . t("Displays links to nodes created on this date") . '';
+		break;
+	}
+}
+
+// oddly no closing php tag in drupal modules

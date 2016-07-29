@@ -1,0 +1,3 @@
+name = Graphic Tag Editor
+description = A way to edit the tags of many nodes from a single screen
+core = 7.x
